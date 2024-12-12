@@ -20,7 +20,10 @@ from linebot.v3.webhooks import (
     TextMessageContent
 )
 
+from model import MyModel
+
 app = Flask(__name__)
+llm = MyModel()
 
 configuration = Configuration(access_token=os.environ['LINE_CHANNEL_ACCESS_TOKEN'])
 handler       = WebhookHandler(os.environ['LINE_CHANNEL_SECRET'])
@@ -47,12 +50,14 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessageContent)
 def handle_message(event):
+    response = llm.invoke(event.message.text)
+    
     with ApiClient(configuration) as api_client:
         line_bot_api = MessagingApi(api_client)
         line_bot_api.reply_message_with_http_info(
             ReplyMessageRequest(
                 reply_token=event.reply_token,
-                messages=[TextMessage(text=event.message.text)]
+                messages=[TextMessage(text=response["output"])]
             )
         )
 
