@@ -31,7 +31,7 @@ def sum(a: int, b: int) -> int:
         int: sum of 'a' and 'b'
     """
     
-    print("In sum tool.")
+    # print("In sum tool.")
     return a + b
 
 @tool
@@ -46,7 +46,7 @@ def count_char_in_string(s: str, c: str) -> int:
         int: how many character:c in string:s.
     """
     
-    print("In count char tool.")
+    # print("In count char tool.")
     count = 0
     for i in s:
         if(c == i):

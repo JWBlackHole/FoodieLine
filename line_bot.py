@@ -50,14 +50,22 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessageContent)
 def handle_message(event):
-    response = llm.invoke(event.message.text)
     
+    # ----- Get return message ----- #
+    return_msg = ""
+    try:
+        response = llm.invoke(event.message.text)
+        return_msg = response["output"]
+    except:
+        return_msg = "Model Invoking Error."
+    
+    # ----- Send message to user ----- #
     with ApiClient(configuration) as api_client:
         line_bot_api = MessagingApi(api_client)
         line_bot_api.reply_message_with_http_info(
             ReplyMessageRequest(
                 reply_token=event.reply_token,
-                messages=[TextMessage(text=response["output"])]
+                messages=[TextMessage(text=return_msg)]
             )
         )
 
