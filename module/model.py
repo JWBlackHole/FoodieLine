@@ -19,6 +19,9 @@ from langchain.agents.output_parsers.openai_tools import OpenAIToolsAgentOutputP
 from langchain.agents import tool
 from langchain.agents import AgentExecutor
 
+from module.user_locations import get_user_location
+from module.google_map     import get_near_restaurant
+
 @tool
 def sum(a: int, b: int) -> int:
     """Sum up number1:a and number2:b.
@@ -31,7 +34,6 @@ def sum(a: int, b: int) -> int:
         int: sum of 'a' and 'b'
     """
     
-    # print("In sum tool.")
     return a + b
 
 @tool
@@ -46,25 +48,44 @@ def count_char_in_string(s: str, c: str) -> int:
         int: how many character:c in string:s.
     """
     
-    # print("In count char tool.")
     count = 0
     for i in s:
         if(c == i):
             count += 1
     return count
 
-class MyModel():
+@tool
+def recommand_restaurant(user_id: str, need: str) -> str:
+    """Recommand user for restaurants according to their needs, calling google_map_api to access real-time information.
+
+    Args:
+        user_id (str): user id
+        need    (str): their specification of restaurant or distance.
+
+    Returns:
+        str: If user loaction is stored in database, it will be a list of restaurants, otherwise we will return a message to ask user for their location.
+    """
     
+    user_location = get_user_location(user_id)
+    print(user_location)
+    if(user_location["status"] == "Not Found"):
+        return "User location is not recorded, please provide your location."
+    else:
+        latitude  = user_location["latitude"]
+        longitude = user_location["longitude"]
+        return get_near_restaurant(latitude, longitude)
+
+class MyModel():
     def __init__(self):
         self.api_key = os.environ['OPENAI_API_KEY']
         self.llm   = ChatOpenAI(model="gpt-4o-mini", api_key = self.api_key)
-        self.tools = [sum, count_char_in_string]
+        self.tools = [sum, count_char_in_string, recommand_restaurant]
         self.llm_with_tools = self.llm.bind_tools(self.tools)
 
         prompt = ChatPromptTemplate.from_messages([
             (
                 "system",
-                "You are very powerful assistant, but don't know current events",
+                "You are very powerful assistant, but don't know current events, finally you have to output in pure text, do not style it",
             ),
             ("user", "{input}"),
             MessagesPlaceholder(variable_name="agent_scratchpad"),
@@ -81,6 +102,7 @@ class MyModel():
             | self.llm_with_tools
             | OpenAIToolsAgentOutputParser()
         )
+        
         self.agent_executor = AgentExecutor(agent=agent, tools=self.tools, verbose=True)
         
     def invoke(self, input_text: str):
