@@ -69,7 +69,7 @@ def recommand_restaurant(user_id: str, radius: int, keyword: str) -> str:
     
     user_location = get_user_location(user_id)
     # print(f"user id      : {user_id}")
-    # print(f"user location: {user_location})
+    # print(f"user location: {user_location}")
     # print(f"keyword      : {keyword}")
     # print(f"radius       : {radius}")
     
