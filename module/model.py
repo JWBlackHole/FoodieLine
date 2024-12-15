@@ -55,25 +55,30 @@ def count_char_in_string(s: str, c: str) -> int:
     return count
 
 @tool
-def recommand_restaurant(user_id: str, need: str) -> str:
+def recommand_restaurant(user_id: str, radius: int, keyword: str) -> str:
     """Recommand user for restaurants according to their needs, calling google_map_api to access real-time information.
 
     Args:
         user_id (str): user id
-        need    (str): their specification of restaurant or distance.
+        radius  (int): the radius in meters to search the restaurant, inferring this value by user specification, default is 1000
+        keyword (str): if user asked for any specification, please give a keyword about restaurant they may be interested.
 
     Returns:
         str: If user loaction is stored in database, it will be a list of restaurants, otherwise we will return a message to ask user for their location.
     """
     
     user_location = get_user_location(user_id)
-    print(user_location)
+    # print(f"user id      : {user_id}")
+    # print(f"user location: {user_location})
+    # print(f"keyword      : {keyword}")
+    # print(f"radius       : {radius}")
+    
     if(user_location["status"] == "Not Found"):
         return "User location is not recorded, please provide your location."
     else:
         latitude  = user_location["latitude"]
         longitude = user_location["longitude"]
-        return get_near_restaurant(latitude, longitude)
+        return get_near_restaurant(latitude, longitude, radius, keyword)
 
 class MyModel():
     def __init__(self):
