@@ -22,7 +22,7 @@ from linebot.v3.webhooks import (
 )
 
 from module.model import MyModel
-from module.user_locations import add_user_location, init_db
+from module.user_locations import update_user_location, init_db
 
 app = Flask(__name__)
 llm = MyModel()
@@ -80,7 +80,7 @@ def handle_location_message(event):
     latitude  = event.message.latitude
     longitude = event.message.longitude
     # print(f"User Location: {latitude}, {longitude}")
-    add_user_location(user_id, latitude, longitude)
+    update_user_location(user_id, latitude, longitude)
     
     address = event.message.address
     # print(f"Address: {address}")
@@ -94,7 +94,6 @@ def handle_location_message(event):
                 messages=[TextMessage(text=return_msg)]
             )
         )
-
 
 if __name__ == "__main__":
     init_db()

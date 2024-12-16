@@ -64,12 +64,13 @@ def recommand_restaurant(user_id: str, radius: int, keyword: str) -> str:
         keyword (str): if user asked for any specification, please give a keyword about restaurant they may be interested.
 
     Returns:
-        str: If user loaction is stored in database, it will be a list of restaurants, otherwise we will return a message to ask user for their location.
+        str: If user loaction is stored in database, it will find near restaurants, please suggest some of them to user.
     """
     
     user_location = get_user_location(user_id)
+    # print(user_location)
     # print(f"user id      : {user_id}")
-    # print(f"user location: {user_location}")
+    # print(f"user location: {user_location["latitude"]}, {user_location["longitude"]}")
     # print(f"keyword      : {keyword}")
     # print(f"radius       : {radius}")
     
@@ -78,7 +79,10 @@ def recommand_restaurant(user_id: str, radius: int, keyword: str) -> str:
     else:
         latitude  = user_location["latitude"]
         longitude = user_location["longitude"]
-        return get_near_restaurant(latitude, longitude, radius, keyword)
+        msg = get_near_restaurant(latitude, longitude, radius, keyword).strip()
+        if(msg == ""):
+            return "Can not find restaurant user want, suggest user to expand the distance."
+        return msg
 
 class MyModel():
     def __init__(self):

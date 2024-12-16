@@ -8,7 +8,7 @@ def get_db_connection():
     return conn
 
 def init_db():
-    # Initialize the database and create the table if it doesn't exist
+    """Initialize the database and create the table if it doesn't exist"""
     conn   = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -24,6 +24,7 @@ def init_db():
     conn.close()
 
 def get_user_location(user_id: str) -> dict:
+    """Get user location from database"""
     conn   = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("""
@@ -47,6 +48,7 @@ def get_user_location(user_id: str) -> dict:
         return {"status": "Not Found"}
     
 def user_has_locations(user_id: str) -> bool:
+    """Check if user location is recorded"""
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute("SELECT 1 FROM user_locations WHERE user_id = ? LIMIT 1", (user_id,))
@@ -54,7 +56,8 @@ def user_has_locations(user_id: str) -> bool:
     conn.close()
     return result is not None
     
-def add_user_location(user_id: str, latitude: float, longitude: float) -> dict:
+def update_user_location(user_id: str, latitude: float, longitude: float) -> dict:
+    """Update user location, if not exist, insert it."""
     conn = get_db_connection()
     cursor = conn.cursor()
 
