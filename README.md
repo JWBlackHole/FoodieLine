@@ -28,7 +28,7 @@ source venv/bin/activate
 ```
 3. Install Dependencies
 ```bash
-pip install -r .env/requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Configuration
