@@ -17,11 +17,16 @@ Utilizing **Langchain**, FoodieLine connects **Large Language Models** (LLMs), t
 ## Project Structure
 ```bash
 FoodieLine
-├── main.py
-├── module
-│   ├── google_map.py
-│   ├── model.py
-│   └── user_locations.py
+├── app
+│   ├── main.py
+│   └── module
+│       ├── google_map.py
+│       ├── model.py
+│       └── user_locations.py
+├── docs
+│   └── introduction.md
+├── LICENSE.txt
+├── locations.db
 ├── README.md
 └── requirements.txt
 ```
