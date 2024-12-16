@@ -18,7 +18,7 @@
 ## Installation
 1. **Clone the Repository**
 ```bash
-git clone https://github.com/JWBlackHole/FooddieLine.git
+git clone https://github.com/JWBlackHole/FoodieLine.git
 cd FoodieLine
 ```
 2. **Create a Virtual Environment**
