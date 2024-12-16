@@ -1,5 +1,6 @@
 # FoodieLine Introduction
-**FoodieLine** is an intelligent chatbot integrated with the **LINE Messaging API**, designed to provide personalized *restaurant recommendations* based on *user interactions* and *location data*. The tool leverages **Large Language Models (LLMs)**, **Google Maps API**, and a **SQLite database** to deliver dynamic and context-aware responses to users.
+**FoodieLine** is an intelligent chatbot integrated with the **LINE Messaging API**, designed to provide personalized *restaurant recommendations* based on *user interactions* and *location data*.  
+Utilizing **Langchain**, FoodieLine connects **Large Language Models** (LLMs), the **Google Maps API**, and a **SQLite** database to provide dynamic, context-aware responses. This powerful combination ensures that users receive relevant and timely dining suggestions, enhancing their culinary experiences through intelligent, real-time interactions.
 
 ## Table of Contents
 - [Features](#features)
@@ -16,17 +17,17 @@
 ## Project Structure
 ```bash
 FoodieLine
-├── main.py                
-├── module
-│   ├── model.py
-│   ├── user_locations.py
-│   └── google_map.py
 ├── locations.db
-├── requirements.txt
-└── README.md
+├── main.py
+├── module
+│   ├── google_map.py
+│   ├── model.py
+│   └── user_locations.py
+├── README.md
+└── requirements.txt
 ```
 
-# Implementation
+## Implementation
 1. **main.py**:
     - **Application Initialization**: Runs the **Flask** app, initializes the **database**.
     - **Chat Bot Webhook Handling**: Manages webhook requests from **LINE**.
