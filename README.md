@@ -18,8 +18,8 @@
 ## Installation
 1. **Clone the Repository**
 ```bash
-git clone https://github.com/yourusername/foodieflow.git
-cd foodieflow
+git clone https://github.com/JWBlackHole/FooddieLine.git
+cd FoodieLine
 ```
 2. **Create a Virtual Environment**
 ```bash
