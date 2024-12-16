@@ -17,7 +17,6 @@ Utilizing **Langchain**, FoodieLine connects **Large Language Models** (LLMs), t
 ## Project Structure
 ```bash
 FoodieLine
-├── locations.db
 ├── main.py
 ├── module
 │   ├── google_map.py
@@ -48,6 +47,41 @@ FoodieLine
     - **Database Implementation**:
         - *Add* and *update* user location
         - *Check* if user location is stored in database
+
+### LangChain Integration
+#### About LangChain:  
+LangChain offers an elegant framework that enables Large Language Models (LLMs) to access and utilize functions or API calls seamlessly. By leveraging the @tool decorator, developers can expose specific functions to the LLM, allowing it to invoke these tools as needed.
+
+Here's an example of how LangChain is utilized within FoodieLine to implement the restaurant recommendation functionality:
+```python
+from langchain.agents import tool
+from app.services.google_maps import get_near_restaurant
+from app.services.database_operations import get_user_location
+
+@tool
+def recommand_restaurant(user_id: str, radius: int, keyword: str) -> str:
+    """Recommend restaurants according to user needs by calling Google Maps API for real-time information.
+
+    Args:
+        user_id (str): User ID
+        radius (int): The radius in meters to search for restaurants, default is 1000.
+        keyword (str): Keyword to filter restaurants based on user preferences.
+
+    Returns:
+        str: A list of recommended restaurants if the user's location is stored; otherwise, prompts the user to provide their location.
+    """
+    
+    user_location = get_user_location(user_id)
+    
+    if user_location["status"] == "Not Found":
+        return "Your location is not recorded yet. Please share your location to receive restaurant recommendations."
+    else:
+        latitude  = user_location["latitude"]
+        longitude = user_location["longitude"]
+        return get_near_restaurant(latitude, longitude, radius, keyword)
+
+```
+
 
 ## Technologies Used
 - **Flask**: Serves as the web framework to handle HTTP requests and manage the application's routing.
