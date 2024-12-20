@@ -2,6 +2,8 @@
 
 **FoodieLine** is a *dynamic* and *intelligent* chatbot built on the **LINE Messaging API**, designed to enhance your dining experiences through personalized restaurant recommendations. Leveraging advanced language models and seamless integration with **Google Maps API**, FoodieLine not only engages in meaningful text conversations but also utilizes your location data to suggest the best eateries tailored to your preferences.
 
+ ![AI-Assistant drawio (1)](https://github.com/user-attachments/assets/20a91ce2-54d3-4782-8def-7cd86e540d8e)
+
 ## Table of Contents
 - [Features](#features)
 - [Installation](#installation)
